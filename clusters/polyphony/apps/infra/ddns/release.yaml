@@ -28,9 +28,9 @@ spec:
               - secretRef:
                   name: ddns
             resources:
-              limits:
+              requests:
                 cpu: 20m
                 memory: 64Mi
-              requests:
+              limits:
                 cpu: 100m
                 memory: 128Mi
