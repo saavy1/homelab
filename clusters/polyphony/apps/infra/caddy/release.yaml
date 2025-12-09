@@ -24,3 +24,21 @@ spec:
         namespace: flux-system
   values:
     replicaCount: 1
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: caddy-ingress-caddy-ingress-controller
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/0/lifecycle
+                value:
+                  postStart:
+                    exec:
+                      command:
+                        - /bin/sh
+                        - -c
+                        - |
+                          sleep 5
+                          wget -q --post-data='{"certificates":{"load_files":[{"certificate":"/etc/caddy/certs/cloudflare-origin-cert.pem","key":"/etc/caddy/certs/cloudflare-origin-cert.pem"}]}}' --header='Content-Type: application/json' -O- http://127.0.0.1:2019/config/apps/tls || true
