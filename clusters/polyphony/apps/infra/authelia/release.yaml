@@ -45,7 +45,8 @@ spec:
         - host: auth.saavylab.dev
           path: /
       tls:
-        enabled: false
+        enabled: true
+        secret: cloudflare-origin-cert
     
     configMap:
       authentication_backend:

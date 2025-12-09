@@ -25,5 +25,7 @@ spec:
   values:
     ingressController:
       config:
-        email: "jayson@saavylab.com"  # TODO: Add email for Let's Encrypt
+        # Disable ACME/auto-HTTPS - we use Cloudflare Origin CA
+        onDemandTLS: false
+        experimentalSmartSort: false
     replicaCount: 1
