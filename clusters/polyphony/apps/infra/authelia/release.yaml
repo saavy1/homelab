@@ -55,9 +55,7 @@ spec:
           - domain: saavylab.dev
             authelia_url: https://auth.saavylab.dev
         redis:
-          enabled: true
-          deploy: true
-          host: authelia-redis-master
+          enabled: false
       
       storage:
         local:
@@ -77,17 +75,6 @@ spec:
           - domain: "*.saavylab.dev"
             policy: one_factor
     
-    redis:
-      enabled: true
-      architecture: standalone
-      auth:
-        enabled: false
-      image:
-        tag: "7.4"
-      master:
-        persistence:
-          enabled: false
-
     persistence:
       enabled: true
       size: 1Gi
