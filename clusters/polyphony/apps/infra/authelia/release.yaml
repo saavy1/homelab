@@ -23,7 +23,7 @@ spec:
         name: authelia
         namespace: flux-system
   values:
-    domain: saavylab.dev
+    domain: auth.saavylab.dev
     
     pod:
       kind: Deployment
