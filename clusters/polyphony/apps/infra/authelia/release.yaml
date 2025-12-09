@@ -81,6 +81,8 @@ spec:
       architecture: standalone
       auth:
         enabled: false
+      image:
+        tag: "7.4"
       master:
         persistence:
           enabled: false
