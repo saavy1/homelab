@@ -23,7 +23,7 @@ spec:
         name: authelia
         namespace: flux-system
   values:
-    domain: auth.saavylab.dev
+    domain: saavylab.dev
     
     pod:
       kind: Deployment
@@ -57,6 +57,7 @@ spec:
         redis:
           enabled: true
           deploy: true
+          host: authelia-redis-master
       
       storage:
         local:
