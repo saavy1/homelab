@@ -35,6 +35,8 @@ spec:
         secret: authelia-tls
     
     pod:
+      kind: Deployment
+      replicas: 1
       extraVolumeMounts:
         - name: users
           mountPath: /config/users.yaml
