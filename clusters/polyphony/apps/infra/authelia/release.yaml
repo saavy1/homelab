@@ -41,9 +41,6 @@ spec:
       enabled: true
       className: caddy
       subdomain: auth
-      rulesOverride:
-        - host: auth.saavylab.dev
-          path: /
       tls:
         enabled: true
         secret: cloudflare-origin-cert
