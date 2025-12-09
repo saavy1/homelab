@@ -23,21 +23,4 @@ spec:
         name: caddy-ingress
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/saavy1/caddy-cloudflare
-      tag: latest
-    ingressController:
-      config:
-        acmeCA: https://acme-v02.api.letsencrypt.org/directory
-        acmeEAB: false
-        onDemandTLS: true
-        onDemandRateLimitInterval: 1m
-        onDemandRateLimitBurst: 5
-      # Cloudflare DNS challenge config
-      extraEnv:
-        - name: CF_API_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: cloudflare-api-token
-              key: api-token
     replicaCount: 1
