@@ -23,16 +23,7 @@ spec:
         name: authelia
         namespace: flux-system
   values:
-    domain: saavylab.dev  # TODO: Change to your domain
-    
-    ingress:
-      enabled: true
-      className: caddy
-      annotations: {}
-      subdomain: auth
-      tls:
-        enabled: true
-        secret: authelia-tls
+    domain: saavylab.dev
     
     pod:
       kind: Deployment
@@ -46,6 +37,13 @@ spec:
           secret:
             secretName: authelia-users
     
+    ingress:
+      enabled: true
+      className: caddy
+      subdomain: auth
+      tls:
+        enabled: false
+    
     configMap:
       authentication_backend:
         file:
@@ -53,9 +51,12 @@ spec:
           path: /config/users.yaml
       
       session:
+        cookies:
+          - domain: saavylab.dev
+            authelia_url: https://auth.saavylab.dev
         redis:
           enabled: true
-          host: authelia-redis-master
+          deploy: true
       
       storage:
         local:
@@ -70,12 +71,19 @@ spec:
       access_control:
         default_policy: deny
         rules:
-          # Allow auth endpoints
-          - domain: auth.saavylab.dev  # TODO: Change to your domain
+          - domain: auth.saavylab.dev
             policy: bypass
-          # Protect all other subdomains with single factor
-          - domain: "*.saavylab.dev"  # TODO: Change to your domain
+          - domain: "*.saavylab.dev"
             policy: one_factor
+    
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: false
+      master:
+        persistence:
+          enabled: false
 
     persistence:
       enabled: true
@@ -83,35 +91,3 @@ spec:
 
     secret:
       existingSecret: authelia-secrets
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: bitnami
-  namespace: flux-system
-spec:
-  interval: 30m
-  url: https://charts.bitnami.com/bitnami
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: authelia-redis
-  namespace: authelia
-spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: redis
-      version: "20.6.0"
-      sourceRef:
-        kind: HelmRepository
-        name: bitnami
-        namespace: flux-system
-  values:
-    architecture: standalone
-    auth:
-      enabled: false
-    master:
-      persistence:
-        size: 1Gi
