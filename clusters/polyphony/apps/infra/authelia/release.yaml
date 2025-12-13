@@ -42,10 +42,7 @@ spec:
       className: caddy
       subdomain: auth
       tls:
-        enabled: true
-        secret: cloudflare-origin-cert
-        hosts:
-          - auth.saavylab.dev
+        enabled: false
     
     configMap:
       authentication_backend:
